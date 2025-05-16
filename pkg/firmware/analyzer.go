@@ -250,7 +250,7 @@ func (a *FirmwareAnalyzer) analyzeFile(filePath string, options AnalysisOptions)
 			lines := bytes.Split(content, []byte("\n"))
 			
 			for _, match := range matches {
-				lineNum, context := findLineAndContext(content, lines, match[0])
+				lineNum, context := findLineAndContext(lines, match[0])
 				
 				finding := FindingResult{
 					SignatureID:   sig.ID,
@@ -347,7 +347,7 @@ func isBinaryFile(content []byte) bool {
 	return bytes.Contains(content, []byte{0})
 }
 
-func findLineAndContext(content []byte, lines [][]byte, offset int) (int, string) {
+func findLineAndContext(lines [][]byte, offset int) (int, string) {
 	// Find line number for byte offset
 	lineNum := 1
 	currentOffset := 0
